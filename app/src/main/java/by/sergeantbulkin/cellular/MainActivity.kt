@@ -16,16 +16,18 @@ import androidx.appcompat.widget.Toolbar
 
 class MainActivity : AppCompatActivity()
 {
-
     private lateinit var appBarConfiguration : AppBarConfiguration
 
     override fun onCreate(savedInstanceState : Bundle?)
     {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
+
+        //Установить AppBar
         val toolbar : Toolbar = findViewById(R.id.toolbar)
         setSupportActionBar(toolbar)
 
+        //Установить FAB
         val fab : FloatingActionButton = findViewById(R.id.fab)
         fab.setOnClickListener { view ->Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG).setAction("Action", null).show() }
 
