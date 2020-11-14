@@ -6,7 +6,9 @@
     <string name="nav_header_desc">Navigation header</string>
     <string name="action_settings">Settings</string>
 
-    <string name="menu_abonents">Абоненты</string>
-    <string name="menu_plans">Планы</string>
+    <string name="menu_abonents">Список абонентов</string>
+    <string name="menu_plans">Тарифы</string>
     <string name="menu_services">Дополнительные услуги</string>
+
+    <string name="abonent_image_content_description">Фотография</string>
 </resources>

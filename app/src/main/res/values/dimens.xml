@@ -6,4 +6,5 @@
     <dimen name="nav_header_height">140dp</dimen>
     <dimen name="nav_header_height_linear">136dp</dimen>
     <dimen name="fab_margin">16dp</dimen>
+    <dimen name="item_list_abonent_margin">8dp</dimen>
 </resources>

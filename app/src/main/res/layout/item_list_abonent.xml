@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:orientation="horizontal"
+    tools:viewBindingIgnore="true"
+    android:clickable="true"
+    android:focusable="true"
+    android:background="?attr/selectableItemBackground">
+    <ImageView
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:src="@drawable/ic_abonent"
+        android:layout_gravity="center_vertical"
+        android:layout_margin="@dimen/item_list_abonent_margin"
+        android:contentDescription="@string/abonent_image_content_description" />
+
+    <LinearLayout
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="9"
+        android:orientation="vertical"
+        android:padding="@dimen/item_list_abonent_margin">
+
+        <TextView
+            android:id="@+id/item_abonent_fio"
+            style="@style/AbonentItem"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Фамилия Имя Отчество"/>
+
+        <TextView
+            android:id="@+id/item_abonent_number"
+            style="@style/AbonentItem"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="+375445543456"/>
+    </LinearLayout>
+</LinearLayout>
