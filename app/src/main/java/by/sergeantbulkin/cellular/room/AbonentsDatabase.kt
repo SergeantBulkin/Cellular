@@ -18,7 +18,6 @@ abstract class AbonentsDatabase : RoomDatabase()
         //Объект БД
         var INSTANCE : AbonentsDatabase? = null
 
-
         fun getAbonentsDatabase(context: Context) : AbonentsDatabase?
         {
             //Создать, если еще не существует
