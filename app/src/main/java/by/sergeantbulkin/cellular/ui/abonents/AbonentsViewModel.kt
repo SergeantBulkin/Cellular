@@ -3,28 +3,23 @@ package by.sergeantbulkin.cellular.ui.abonents
 import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import by.sergeantbulkin.cellular.DisposableManager
 import by.sergeantbulkin.cellular.room.AbonentsDatabase
 import by.sergeantbulkin.cellular.room.model.Abonent
 import io.reactivex.android.schedulers.AndroidSchedulers
+import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.schedulers.Schedulers
 
 class AbonentsViewModel : ViewModel()
 {
     //----------------------------------------------------------------------------------------------
-    var abonentsList = mutableListOf<Abonent>()
+    private var abonentsList = mutableListOf<Abonent>()
+    private val compositeDisposable = CompositeDisposable()
     var abonentsListLive = MutableLiveData<List<Abonent>>()
-    var dbInstance : AbonentsDatabase? = null
-    //----------------------------------------------------------------------------------------------
-    fun setDatabase(dbInstance : AbonentsDatabase)
-    {
-        this.dbInstance = dbInstance
-    }
     //----------------------------------------------------------------------------------------------
     //Добавить абонента
     fun addAbonent(abonent: Abonent)
     {
-        dbInstance?.abonentDao()?.insertAbonent(abonent)
+        AbonentsDatabase.INSTANCE?.abonentDao()?.insertAbonent(abonent)
             ?.subscribeOn(Schedulers.io())
             ?.observeOn(AndroidSchedulers.mainThread())
             ?.subscribe(
@@ -37,7 +32,7 @@ class AbonentsViewModel : ViewModel()
                 }).let {
                 if (it != null)
                 {
-                    DisposableManager.add(it)
+                    compositeDisposable.add(it)
                 }
             }
     }
@@ -45,37 +40,42 @@ class AbonentsViewModel : ViewModel()
     //Получить всех абонентов
     fun getAllAbonents()
     {
-        dbInstance?.abonentDao()?.getAbonents()
+        Log.d("TAG", "AbonentsViewModel - Вызов - getAllAbonents|${AbonentsDatabase.INSTANCE}")
+        AbonentsDatabase.INSTANCE?.abonentDao()?.getAbonents()
             ?.subscribeOn(Schedulers.io())
             ?.observeOn(AndroidSchedulers.mainThread())
             ?.subscribe(
                 {
                     if (!it.isNullOrEmpty())
                     {
+                        Log.d("TAG", "AbonentsViewModel - getAllAbonents - получено ${it.size} абонентов из БД")
                         //Отправить слушателю
                         abonentsListLive.postValue(it)
                         //Добавить все элементы
                         abonentsList.addAll(it)
                     } else
                     {
+                        Log.d("TAG", "AbonentsViewModel - getAllAbonents - пустой")
                         //Отправить слушателю пустой список
                         abonentsListLive.postValue(listOf())
                     }
                 },
                 {
-
+                    Log.d("TAG", "AbonentsViewModel - getAllAbonents - Error: ${it.localizedMessage}")
                 }).let {
                 if (it != null)
                 {
-                    DisposableManager.add(it)
+                    compositeDisposable.add(it)
                 }
             }
     }
+
     //----------------------------------------------------------------------------------------------
     override fun onCleared()
     {
-        DisposableManager.dispose()
         super.onCleared()
+        compositeDisposable.dispose()
+        compositeDisposable.clear()
     }
     //----------------------------------------------------------------------------------------------
 }

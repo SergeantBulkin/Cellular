@@ -10,29 +10,29 @@ import by.sergeantbulkin.cellular.room.model.Abonent
 
 class AbonentsAdapter : RecyclerView.Adapter<AbonentsAdapter.AbonentViewHolder>()
 {
-    var abonentsList = mutableListOf<Abonent>()
-        set(list)
-        {
-            field.clear()
-            field.addAll(list)
-            notifyDataSetChanged()
-        }
-
+    //----------------------------------------------------------------------------------------------
+    var abonentsList = emptyList<Abonent>()
+    fun setAbonents(abonents : List<Abonent>)
+    {
+        this.abonentsList = abonents
+        notifyDataSetChanged()
+    }
+    //----------------------------------------------------------------------------------------------
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): AbonentViewHolder
     {
         return AbonentViewHolder(LayoutInflater.from(parent.context).inflate(R.layout.item_list_abonent, parent, false))
     }
-
+    //----------------------------------------------------------------------------------------------
     override fun onBindViewHolder(holder: AbonentViewHolder, position: Int)
     {
         holder.bind(abonentsList[position])
     }
-
+    //----------------------------------------------------------------------------------------------
     override fun getItemCount(): Int
     {
         return abonentsList.size
     }
-
+    //----------------------------------------------------------------------------------------------
     inner class AbonentViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView)
     {
         private var fioTextView : TextView? = null
@@ -51,4 +51,5 @@ class AbonentsAdapter : RecyclerView.Adapter<AbonentsAdapter.AbonentViewHolder>(
             numberTextView?.text = abonent.mobileNumber
         }
     }
+    //----------------------------------------------------------------------------------------------
 }

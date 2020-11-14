@@ -7,7 +7,8 @@
         <item
             android:id="@+id/nav_abonents"
             android:icon="@drawable/ic_menu_camera"
-            android:title="@string/menu_abonents"/>
+            android:title="@string/menu_abonents"
+            android:checked="true"/>
         <item
             android:id="@+id/nav_plans"
             android:icon="@drawable/ic_menu_gallery"

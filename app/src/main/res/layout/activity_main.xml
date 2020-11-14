@@ -23,6 +23,7 @@
         android:background="@drawable/side_nav_bar"
         app:headerLayout="@layout/nav_header_main"
         app:menu="@menu/activity_main_drawer"
+        app:itemBackground="@drawable/checked_background"
         app:itemTextColor="@color/white"
         app:itemIconTint="@color/white"/>
 </androidx.drawerlayout.widget.DrawerLayout>

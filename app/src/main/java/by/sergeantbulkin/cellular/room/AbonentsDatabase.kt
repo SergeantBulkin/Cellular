@@ -1,6 +1,7 @@
 package by.sergeantbulkin.cellular.room
 
 import android.content.Context
+import android.util.Log
 import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
@@ -18,17 +19,18 @@ abstract class AbonentsDatabase : RoomDatabase()
         //Объект БД
         var INSTANCE : AbonentsDatabase? = null
 
-        fun getAbonentsDatabase(context: Context) : AbonentsDatabase?
+        fun setAbonentsDatabase(context: Context)
         {
+            Log.d("TAG", "AbonentsDatabase - getAbonentsDatabase")
             //Создать, если еще не существует
             if (INSTANCE == null)
             {
+                Log.d("TAG", "AbonentsDatabase - создание")
                 synchronized(AbonentsDatabase::class)
                 {
                     INSTANCE = Room.databaseBuilder(context, AbonentsDatabase::class.java, "abonents.db").build()
                 }
             }
-            return INSTANCE
         }
 
         //Уничтожить объект БД
