@@ -1,0 +1,219 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".ui.abonent.AbonentFragment">
+
+    <androidx.core.widget.ContentLoadingProgressBar
+        android:id="@+id/abonent_progress_bar"
+        style="?android:attr/progressBarStyleHorizontal"
+        android:layout_width="match_parent"
+        android:layout_height="12dp"
+        android:visibility="gone"
+        android:indeterminate="true"/>
+
+    <androidx.core.widget.NestedScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+            <!--=================================================================================-->
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/abonent_name_text_input_layout"
+                style="@style/TextInputLayoutStyle"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Имя">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/abonent_name_text_input_edit_text"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content" />
+            </com.google.android.material.textfield.TextInputLayout>
+            <!--=================================================================================-->
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/abonent_lastname_text_input_layout"
+                style="@style/TextInputLayoutStyle"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Фамилия">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/abonent_lastname_text_input_edit_text"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content" />
+            </com.google.android.material.textfield.TextInputLayout>
+            <!--=================================================================================-->
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/abonent_middlename_text_input_layout"
+                style="@style/TextInputLayoutStyle"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Отчество">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/abonent_middlename_text_input_edit_text"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content" />
+            </com.google.android.material.textfield.TextInputLayout>
+            <!--=================================================================================-->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_marginStart="16dp"
+                android:layout_marginEnd="16dp">
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:gravity="center">
+                    <RadioButton
+                        android:id="@+id/abonent_radio_button_woman"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Женский"
+                        android:textSize="18sp"
+                        android:layout_marginEnd="16dp"/>
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:gravity="center">
+                    <RadioButton
+                        android:id="@+id/abonent_radio_button_man"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Мужской"
+                        android:textSize="18sp"
+                        android:layout_marginStart="16dp"/>
+                </LinearLayout>
+            </LinearLayout>
+            <!--=================================================================================-->
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/abonent_age_text_input_layout"
+                style="@style/TextInputLayoutStyle"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Полных лет">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/abonent_age_text_input_edit_text"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content" />
+            </com.google.android.material.textfield.TextInputLayout>
+            <!--=================================================================================-->
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/abonent_address_text_input_layout"
+                style="@style/TextInputLayoutStyle"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Адрес">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/abonent_address_text_input_edit_text"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content" />
+            </com.google.android.material.textfield.TextInputLayout>
+            <!--=================================================================================-->
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/abonent_registration_date_text_input_layout"
+                style="@style/TextInputLayoutStyle"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Дата регистрации">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/abonent_registration_date_text_input_edit_text"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content" />
+            </com.google.android.material.textfield.TextInputLayout>
+            <!--=================================================================================-->
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/abonent_mobile_number_text_input_layout"
+                style="@style/TextInputLayoutStyle"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Дата регистрации">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/abonent_mobile_number_text_input_edit_text"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content" />
+            </com.google.android.material.textfield.TextInputLayout>
+            <!--=================================================================================-->
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/abonent_plan_text_input_layout"
+                style="@style/AutoCompleteTextViewStyle"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Тарифный план">
+
+                <com.google.android.material.textfield.MaterialAutoCompleteTextView
+                    android:id="@+id/abonent_plan_text_input_edit_text"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:editable="false"/>
+            </com.google.android.material.textfield.TextInputLayout>
+            <!--=================================================================================-->
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/abonent_services_text_input_layout"
+                style="@style/AutoCompleteTextViewStyle"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Дополнительные услуги">
+
+                <com.google.android.material.textfield.MaterialAutoCompleteTextView
+                    android:id="@+id/abonent_services_text_input_edit_text"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:editable="false"/>
+            </com.google.android.material.textfield.TextInputLayout>
+            <!--=================================================================================-->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_marginTop="4dp"
+                android:layout_marginStart="16dp"
+                android:layout_marginEnd="16dp"
+                android:layout_marginBottom="8dp">
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/abonent_button_edit"
+                    style="@style/ButtonStyle"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="Изменить"
+                    android:layout_marginEnd="4dp"/>
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/abonent_button_add"
+                    style="@style/ButtonStyle"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="Добавить"
+                    android:visibility="gone"
+                    android:layout_marginStart="4dp"
+                    android:layout_marginEnd="4dp"/>
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/abonent_button_delete"
+                    style="@style/ButtonStyle"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="Удалить"
+                    android:layout_marginStart="4dp"/>
+            </LinearLayout>
+            <!--=================================================================================-->
+        </LinearLayout>
+    </androidx.core.widget.NestedScrollView>
+</LinearLayout>
