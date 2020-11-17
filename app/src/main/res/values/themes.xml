@@ -23,6 +23,10 @@
 
     <style name="Theme.Cellular.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
 
+    <style name="NavigationDrawerStyle">
+        <item name="android:background">@drawable/side_nav_bar</item>
+    </style>
+
     <style name="AbonentItem">
         <item name="android:textColor">@color/black</item>
         <item name="android:textSize">16sp</item>

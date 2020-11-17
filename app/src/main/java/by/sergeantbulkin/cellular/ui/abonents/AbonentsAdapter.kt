@@ -8,11 +8,12 @@ import androidx.recyclerview.widget.RecyclerView
 import by.sergeantbulkin.cellular.R
 import by.sergeantbulkin.cellular.room.model.Abonent
 
-class AbonentsAdapter : RecyclerView.Adapter<AbonentsAdapter.AbonentViewHolder>()
+class AbonentsAdapter(private val clickListener : (Abonent) -> Unit) : RecyclerView.Adapter<AbonentsAdapter.AbonentViewHolder>()
 {
     //----------------------------------------------------------------------------------------------
-    var abonentsList = emptyList<Abonent>()
-    fun setAbonents(abonents : List<Abonent>)
+    private var abonentsList = arrayListOf<Abonent>()
+    //----------------------------------------------------------------------------------------------
+    fun setAbonents(abonents : ArrayList<Abonent>)
     {
         this.abonentsList = abonents
         notifyDataSetChanged()
@@ -33,22 +34,31 @@ class AbonentsAdapter : RecyclerView.Adapter<AbonentsAdapter.AbonentViewHolder>(
         return abonentsList.size
     }
     //----------------------------------------------------------------------------------------------
+    fun addItem(abonent: Abonent)
+    {
+        abonentsList.add(abonent)
+        notifyItemInserted(abonentsList.size-1)
+    }
+    fun removeItem(abonent: Abonent)
+    {
+        val index = abonentsList.indexOf(abonent)
+        abonentsList.removeAt(index)
+        notifyItemRemoved(index)
+    }
+    //----------------------------------------------------------------------------------------------
+    //----------------------------------------------------------------------------------------------
     inner class AbonentViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView)
     {
-        private var fioTextView : TextView? = null
-        private var numberTextView : TextView? = null
-
-        init
-        {
-            fioTextView = itemView.findViewById(R.id.item_abonent_fio)
-            numberTextView = itemView.findViewById(R.id.item_abonent_number)
-        }
+        private var fioTextView : TextView = itemView.findViewById(R.id.item_abonent_fio)
+        private var numberTextView : TextView = itemView.findViewById(R.id.item_abonent_number)
 
         fun bind(abonent: Abonent)
         {
-            fioTextView?.text = ""
-            fioTextView?.append("${abonent.lastName} ${abonent.name} ${abonent.middleName}")
-            numberTextView?.text = abonent.mobileNumber
+            fioTextView.text = ""
+            fioTextView.append("${abonent.lastName} ${abonent.name} ${abonent.middleName}")
+            numberTextView.text = abonent.mobileNumber
+            //Нажатие обрабатывается в MainActivity
+            itemView.setOnClickListener { clickListener(abonent) }
         }
     }
     //----------------------------------------------------------------------------------------------

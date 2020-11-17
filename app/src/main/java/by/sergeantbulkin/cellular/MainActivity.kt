@@ -1,12 +1,14 @@
 package by.sergeantbulkin.cellular
 
 import android.os.Bundle
+import android.os.PersistableBundle
 import android.util.Log
 import android.view.Menu
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
 import androidx.drawerlayout.widget.DrawerLayout
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.FragmentTransaction
 import androidx.lifecycle.ViewModelProvider
 import by.sergeantbulkin.cellular.room.AbonentsDatabase
 import by.sergeantbulkin.cellular.ui.SharedViewModel
@@ -25,17 +27,19 @@ class MainActivity : AppCompatActivity()
     private lateinit var currentFragment: Fragment
     private lateinit var toolbar : Toolbar
     private lateinit var drawerLayout : DrawerLayout
+    private lateinit var sharedViewModel: SharedViewModel
     //----------------------------------------------------------------------------------------------
     override fun onCreate(savedInstanceState : Bundle?)
     {
+        Log.d("TAG", "MainActivity - onCreate")
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        //Инициализация фрагментов
-        initFragments()
-
         //Настроить NavigationDrawer
         setUpNavigationDrawer()
+
+        //Инициализация фрагментов
+        initFragments()
 
         //Установить БД
         AbonentsDatabase.setAbonentsDatabase(applicationContext)
@@ -53,41 +57,43 @@ class MainActivity : AppCompatActivity()
         servicesFragment = ServicesFragment()
 
         //Добавить все фрагменты и спрятать их
+        Log.d("TAG", "Фрагментов initFragments - ${supportFragmentManager.fragments.size}")
         supportFragmentManager.beginTransaction().add(R.id.nav_host_fragment, abonentsFragment).hide(abonentsFragment).commit()
         supportFragmentManager.beginTransaction().add(R.id.nav_host_fragment, plansFragment).hide(plansFragment).commit()
         supportFragmentManager.beginTransaction().add(R.id.nav_host_fragment, servicesFragment).commit()
 
         currentFragment = servicesFragment
-        loadFragmentFromDrawer(abonentsFragment)
+        loadFragmentFromDrawer(abonentsFragment, resources.getString(R.string.menu_abonents))
     }
     //----------------------------------------------------------------------------------------------
     //Настроить NavigationDrawer
     private fun setUpNavigationDrawer()
     {
         toolbar = findViewById(R.id.toolbar)
+        setTitle(resources.getString(R.string.menu_abonents))
         drawerLayout = findViewById(R.id.drawer_layout)
         val navView : NavigationView = findViewById(R.id.nav_view)
 
         //Установить AppBar
         setSupportActionBar(toolbar)
-        //NavigationIcon
+        //Включить отображение, чтобы обработать нажатие
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
         //NavigationIcon click listener
         toolbar.setNavigationOnClickListener {
             when(currentFragment)
             {
-                is AbonentFragment -> backToFragment(abonentsFragment)
+                is AbonentFragment -> backToFragment(abonentsFragment, resources.getString(R.string.menu_abonents))
                 else -> drawerLayout.open()
             }
         }
-
+        //Обработка выбора пунктов из NavigationDrawer
         navView.setNavigationItemSelectedListener {
             navView.setCheckedItem(it)
             when (it.itemId)
             {
-                R.id.nav_abonents -> loadFragmentFromDrawer(abonentsFragment)
-                R.id.nav_plans -> loadFragmentFromDrawer(plansFragment)
-                R.id.nav_services -> loadFragmentFromDrawer(servicesFragment)
+                R.id.nav_abonents -> loadFragmentFromDrawer(abonentsFragment, it.title.toString())
+                R.id.nav_plans -> loadFragmentFromDrawer(plansFragment, it.title.toString())
+                R.id.nav_services -> loadFragmentFromDrawer(servicesFragment, it.title.toString())
             }
             drawerLayout.closeDrawers()
             true
@@ -97,11 +103,12 @@ class MainActivity : AppCompatActivity()
     //Установить слушателей SharedViewModel
     private fun setSharedViewModelListeners()
     {
-        val sharedViewModel = ViewModelProvider(this).get(SharedViewModel::class.java)
-        sharedViewModel.inputString.observe(this, {
-            Log.d("TAG", "String")
-            addFragment(AbonentFragment())
-            toolbar.setNavigationIcon(R.drawable.ic_arrow_back)
+        sharedViewModel = ViewModelProvider(this).get(SharedViewModel::class.java)
+        sharedViewModel.temp.observe(this, {
+            addFragment(AbonentFragment(), resources.getString(R.string.label_abonent_add))
+        })
+        sharedViewModel.abonent.observe(this, {
+            addFragment(AbonentFragment.newInstance(it), resources.getString(R.string.label_abonent_edit))
         })
     }
     //----------------------------------------------------------------------------------------------
@@ -118,7 +125,7 @@ class MainActivity : AppCompatActivity()
         //то закрыть их
         when(currentFragment)
         {
-            is AbonentFragment -> backToFragment(abonentsFragment)
+            is AbonentFragment -> backToFragment(abonentsFragment, resources.getString(R.string.menu_abonents))
             else -> super.onBackPressed()
         }
     }
@@ -129,12 +136,54 @@ class MainActivity : AppCompatActivity()
         menuInflater.inflate(R.menu.main, menu)
         return true
     }
+
+    //----------------------------------------------------------------------------------------------
+    override fun onStart()
+    {
+        Log.d("TAG", "MainActivity - onStart")
+        super.onStart()
+    }
+
+    //----------------------------------------------------------------------------------------------
+    override fun onResume()
+    {
+        Log.d("TAG", "MainActivity - onResume")
+        super.onResume()
+    }
+
+    //----------------------------------------------------------------------------------------------
+    override fun onPause()
+    {
+        Log.d("TAG", "MainActivity - onPause")
+        super.onPause()
+    }
+
+    //----------------------------------------------------------------------------------------------
+    override fun onSaveInstanceState(outState: Bundle, outPersistentState: PersistableBundle)
+    {
+        Log.d("TAG", "MainActivity - onSaveInstanceState2")
+        super.onSaveInstanceState(outState, outPersistentState)
+    }
+
+    //----------------------------------------------------------------------------------------------
+    override fun onRestoreInstanceState(savedInstanceState: Bundle)
+    {
+        Log.d("TAG", "MainActivity - onRestoreInstanceState1")
+        super.onRestoreInstanceState(savedInstanceState)
+    }
+
+    override fun onRestoreInstanceState(savedInstanceState: Bundle?, persistentState: PersistableBundle?)
+    {
+        Log.d("TAG", "MainActivity - onStart")
+        super.onRestoreInstanceState(savedInstanceState, persistentState)
+    }
+
     //----------------------------------------------------------------------------------------------
     override fun onStop()
     {
         Log.d("TAG", "MainActivity - onStop")
         //Убирать фрагменты, чтобы при включении тёмной темы не было наложения
-        supportFragmentManager.beginTransaction().remove(abonentsFragment).remove(servicesFragment).remove(plansFragment).commit()
+        supportFragmentManager.beginTransaction().remove(abonentsFragment).remove(servicesFragment).remove(plansFragment).remove(currentFragment).commit()
         super.onStop()
     }
     //----------------------------------------------------------------------------------------------
@@ -147,27 +196,36 @@ class MainActivity : AppCompatActivity()
     }
     //----------------------------------------------------------------------------------------------
     //Загрузить фрагмент из NavigationDrawer
-    private fun loadFragmentFromDrawer(fragment: Fragment)
+    private fun loadFragmentFromDrawer(fragment: Fragment, title: String)
     {
         //Загрузить только если мы хотим переключиться на другой фрагмент
         if (fragment != currentFragment)
         {
             supportFragmentManager.beginTransaction().show(fragment).hide(currentFragment).commit()
             currentFragment = fragment
+            setTitle(title)
         }
     }
     //----------------------------------------------------------------------------------------------
-    private fun addFragment(fragment: Fragment)
+    private fun addFragment(fragment: Fragment, title : String)
     {
-        supportFragmentManager.beginTransaction().hide(currentFragment).add(R.id.nav_host_fragment ,fragment).commit()
+        supportFragmentManager.beginTransaction().hide(currentFragment).add(R.id.nav_host_fragment ,fragment).setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN).commit()
         currentFragment = fragment
+        toolbar.setNavigationIcon(R.drawable.ic_arrow_back)
+        setTitle(title)
     }
     //----------------------------------------------------------------------------------------------
-    private fun backToFragment(showFragment : Fragment)
+    private fun backToFragment(showFragment : Fragment, title: String)
     {
-        supportFragmentManager.beginTransaction().remove(currentFragment).show(showFragment).commit()
+        supportFragmentManager.beginTransaction().remove(currentFragment).setTransition(FragmentTransaction.TRANSIT_FRAGMENT_CLOSE).show(showFragment).commit()
         currentFragment = abonentsFragment
         toolbar.setNavigationIcon(R.drawable.ic_dehaze)
+        setTitle(title)
+    }
+    //----------------------------------------------------------------------------------------------
+    private fun setTitle(title : String)
+    {
+        toolbar.title = title
     }
     //----------------------------------------------------------------------------------------------
 }

@@ -40,7 +40,6 @@ class AbonentsViewModel : ViewModel()
     //Получить всех абонентов
     fun getAllAbonents()
     {
-        Log.d("TAG", "AbonentsViewModel - Вызов - getAllAbonents|${AbonentsDatabase.INSTANCE}")
         AbonentsDatabase.INSTANCE?.abonentDao()?.getAbonents()
             ?.subscribeOn(Schedulers.io())
             ?.observeOn(AndroidSchedulers.mainThread())
@@ -48,7 +47,6 @@ class AbonentsViewModel : ViewModel()
                 {
                     if (!it.isNullOrEmpty())
                     {
-                        Log.d("TAG", "AbonentsViewModel - getAllAbonents - получено ${it.size} абонентов из БД")
                         //Отправить слушателю
                         abonentsListLive.postValue(it)
                         //Добавить все элементы
@@ -69,7 +67,6 @@ class AbonentsViewModel : ViewModel()
                 }
             }
     }
-
     //----------------------------------------------------------------------------------------------
     override fun onCleared()
     {

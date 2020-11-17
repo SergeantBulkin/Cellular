@@ -9,11 +9,9 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import by.sergeantbulkin.cellular.databinding.FragmentAbonentsBinding
-import by.sergeantbulkin.cellular.room.AbonentsDatabase
 import by.sergeantbulkin.cellular.room.model.Abonent
+import by.sergeantbulkin.cellular.ui.SharedViewModel
 import com.google.android.material.snackbar.Snackbar
-import io.reactivex.android.schedulers.AndroidSchedulers
-import io.reactivex.schedulers.Schedulers
 
 class AbonentsFragment : Fragment()
 {
@@ -27,11 +25,15 @@ class AbonentsFragment : Fragment()
     //----------------------------------------------------------------------------------------------
     override fun onCreateView(inflater : LayoutInflater, container : ViewGroup?, savedInstanceState : Bundle?) : View?
     {
-        Log.d("TAG", "AbonentsFragment - onCreateView $this")
         //Инициализация ViewModel
         viewModel = ViewModelProvider(this).get(AbonentsViewModel::class.java)
         //Инициализация адаптера
-        adapter = AbonentsAdapter()
+        adapter = AbonentsAdapter{abonent ->
+            activity?.let {
+                val sharedViewModel = ViewModelProvider(it).get(SharedViewModel::class.java)
+                sharedViewModel.abonent.postValue(abonent)
+            }
+        }
         //Инициализация переменной биднинга
         binding = FragmentAbonentsBinding.inflate(inflater, container, false)
         return binding.root
@@ -40,13 +42,18 @@ class AbonentsFragment : Fragment()
     override fun onViewCreated(view: View, savedInstanceState: Bundle?)
     {
         super.onViewCreated(view, savedInstanceState)
-        Log.d("TAG", "AbonentsFragment - onViewCreated")
 
         //Установить FAB
         binding.fab.setOnClickListener {
-            val abonent = Abonent(name = "Name", lastName = "Lastname", middleName = "Middlename", sex = true, age = 17,
-                address = "address", registrationDate = "date", mobileNumber = "+375448674967", planName = "Lemon", planId = 52)
-            viewModel.addAbonent(abonent)
+            //val abonent = Abonent(name = "Name", lastName = "Lastname", middleName = "Middlename", sex = true, age = 17, address = "address", registrationDate = "date", mobileNumber = "+375448674967", planName = "Lemon", planId = 52)
+            //viewModel.addAbonent(abonent)
+
+            activity?.let {
+                val sharedViewModel = ViewModelProvider(it).get(SharedViewModel::class.java)
+                sharedViewModel.temp.postValue(1)
+            }
+
+            //Navigation.findNavController(it).navigate(R.id.action_nav_abonents_to_abonentFragment)
         }
 
         //Настройка RecyclerView
@@ -73,13 +80,12 @@ class AbonentsFragment : Fragment()
         //Подписаться на изменения списка абонентов
         viewModel.abonentsListLive.observe(this.viewLifecycleOwner,
         {
-            Log.d("TAG", "AbonentsFragment - observerViewModel - получены абоненты")
             if (!it.isNullOrEmpty())
             {
                 //Сделать список видимым
                 binding.abonentsRecyclerView.visibility = View.VISIBLE
                 //Установить новый список в адаптер
-                adapter.setAbonents(it)
+                adapter.setAbonents(it as ArrayList<Abonent>)
             } else
             {
                 //Спрятать список

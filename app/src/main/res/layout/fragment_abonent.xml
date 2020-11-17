@@ -193,6 +193,7 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:text="Изменить"
+                    android:visibility="gone"
                     android:layout_marginEnd="4dp"/>
                 <com.google.android.material.button.MaterialButton
                     android:id="@+id/abonent_button_add"
@@ -201,7 +202,6 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:text="Добавить"
-                    android:visibility="gone"
                     android:layout_marginStart="4dp"
                     android:layout_marginEnd="4dp"/>
                 <com.google.android.material.button.MaterialButton
@@ -211,6 +211,7 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:text="Удалить"
+                    android:visibility="gone"
                     android:layout_marginStart="4dp"/>
             </LinearLayout>
             <!--=================================================================================-->

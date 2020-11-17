@@ -8,32 +8,36 @@
     android:clickable="true"
     android:focusable="true"
     android:background="?attr/selectableItemBackground">
+
     <ImageView
-        android:layout_width="0dp"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_weight="1"
-        android:src="@drawable/ic_abonent"
         android:layout_gravity="center_vertical"
         android:layout_margin="@dimen/item_list_abonent_margin"
-        android:contentDescription="@string/abonent_image_content_description" />
+        android:contentDescription="@string/abonent_image_content_description"
+        android:scaleType="centerInside"
+        android:src="@drawable/ic_abonent" />
 
     <LinearLayout
-        android:layout_width="0dp"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_weight="9"
         android:orientation="vertical"
-        android:padding="@dimen/item_list_abonent_margin">
+        android:layout_gravity="center_vertical"
+        android:paddingTop="@dimen/item_list_abonent_margin"
+        android:paddingStart="4dp"
+        android:paddingEnd="4dp"
+        android:paddingBottom="@dimen/item_list_abonent_margin">
 
         <TextView
             android:id="@+id/item_abonent_fio"
             style="@style/AbonentItem"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
+            android:layout_height="wrap_content"/>
 
         <TextView
             android:id="@+id/item_abonent_number"
             style="@style/AbonentItem"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
+            android:layout_height="wrap_content"/>
     </LinearLayout>
 </LinearLayout>
