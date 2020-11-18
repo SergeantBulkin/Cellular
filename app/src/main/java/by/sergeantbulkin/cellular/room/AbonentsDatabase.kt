@@ -6,13 +6,20 @@ import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
 import by.sergeantbulkin.cellular.room.dao.AbonentDAO
+import by.sergeantbulkin.cellular.room.dao.PlanDAO
+import by.sergeantbulkin.cellular.room.dao.ServiceDAO
 import by.sergeantbulkin.cellular.room.model.Abonent
+import by.sergeantbulkin.cellular.room.model.Plan
+import by.sergeantbulkin.cellular.room.model.PlanService
+import by.sergeantbulkin.cellular.room.model.Service
 
-@Database(entities = [Abonent::class], version = 1)
+@Database(entities = [Abonent::class, Plan::class, Service::class, PlanService::class], version = 1)
 abstract class AbonentsDatabase : RoomDatabase()
 {
     //Все DAO
     abstract fun abonentDao() : AbonentDAO
+    abstract fun planDao() : PlanDAO
+    abstract fun serviceDao() : ServiceDAO
 
     companion object
     {

@@ -6,20 +6,19 @@ import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.PrimaryKey
 
-@Entity(tableName = "abonent")
+@Entity
 data class Abonent(
-    @ColumnInfo(name = "name") val name : String,
-    @ColumnInfo(name = "last_name") val lastName : String,
-    @ColumnInfo(name = "middle_name") val middleName : String,
+    val name : String,
+    val lastName : String,
+    val middleName : String,
     @ColumnInfo(name = "sex") val isWoman : Boolean,
-    @ColumnInfo(name = "age") val age : Int,
-    @ColumnInfo(name = "address") val address : String,
-    @ColumnInfo(name = "registration_date") val registrationDate : String,
-    @ColumnInfo(name = "mobile_number") val mobileNumber : String,
-    @ColumnInfo(name = "plan_name") val planName : String,
+    val age : Int,
+    val address : String,
+    val registrationDate : String,
+    val mobileNumber : String,
     val planId : Int) : Parcelable
 {
-    @PrimaryKey(autoGenerate = true) @ColumnInfo(name = "_id") var id : Int = 0
+    @PrimaryKey(autoGenerate = true) var abonentId : Int = 0
 
     constructor(parcel: Parcel) : this(
         parcel.readString()!!,
@@ -30,11 +29,10 @@ data class Abonent(
         parcel.readString()!!,
         parcel.readString()!!,
         parcel.readString()!!,
-        parcel.readString()!!,
         parcel.readInt()
     )
     {
-        id = parcel.readInt()
+        abonentId = parcel.readInt()
     }
 
     override fun writeToParcel(parcel: Parcel, flags: Int)
@@ -47,9 +45,8 @@ data class Abonent(
         parcel.writeString(address)
         parcel.writeString(registrationDate)
         parcel.writeString(mobileNumber)
-        parcel.writeString(planName)
         parcel.writeInt(planId)
-        parcel.writeInt(id)
+        parcel.writeInt(abonentId)
     }
 
     override fun describeContents() = 0
