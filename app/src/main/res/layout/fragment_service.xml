@@ -7,9 +7,9 @@
     android:orientation="vertical"
     tools:context=".ui.services.ServiceBottomSheet">
     <LinearLayout
+        style="@style/AppBarBackgroundColor"
         android:layout_width="match_parent"
         android:layout_height="?attr/actionBarSize"
-        android:background="@color/purple_500"
         android:orientation="horizontal">
 
         <LinearLayout
@@ -47,6 +47,7 @@
     </LinearLayout>
 
     <LinearLayout
+        style="@style/BackgroundColor"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical">

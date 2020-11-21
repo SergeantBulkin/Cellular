@@ -8,7 +8,7 @@
     tools:context=".ui.abonents.AbonentBottomSheet">
 
     <LinearLayout
-        android:background="@color/purple_500"
+        style="@style/AppBarBackgroundColor"
         android:layout_width="match_parent"
         android:layout_height="?attr/actionBarSize"
         android:orientation="horizontal">
@@ -35,12 +35,10 @@
             android:gravity="center_vertical">
             <TextView
                 android:id="@+id/abonent_title"
+                style="@style/AppBarTitleStyle"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="Добавить абонента"
-                android:textColor="@color/white"
-                android:textSize="20sp"
-                android:fontFamily="@font/merriweather_regular"
                 android:layout_marginStart="16dp"
                 android:layout_marginEnd="16dp"/>
         </LinearLayout>
@@ -61,6 +59,7 @@
         android:indeterminate="true"/>
 
     <androidx.core.widget.NestedScrollView
+        style="@style/BackgroundColor"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
@@ -125,6 +124,7 @@
                     android:gravity="center">
                     <RadioButton
                         android:id="@+id/abonent_radio_button_woman"
+                        style="@style/RadioButtonStyle"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="Женский"
@@ -139,6 +139,7 @@
                     android:gravity="center">
                     <RadioButton
                         android:id="@+id/abonent_radio_button_man"
+                        style="@style/RadioButtonStyle"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="Мужской"

@@ -23,6 +23,7 @@ import com.google.android.material.navigation.NavigationView
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.schedulers.Schedulers
+import java.util.concurrent.TimeUnit
 
 class MainActivity : AppCompatActivity()
 {
@@ -55,87 +56,6 @@ class MainActivity : AppCompatActivity()
 
         //Инициализация адаптеров
         initAdapters()
-
-        //initDataToDB()
-    }
-    //----------------------------------------------------------------------------------------------
-    private fun initDataToDB()
-    {
-        val services1 = listOf(
-            Service("Service 1.1", 25f),
-            Service("Service 2.1", 32f),
-            Service("Service 2.2", 55f),
-            Service("Service 2.3", 74f),
-            Service("Service 3.1", 25f),
-            Service("Service 3.2", 51f),
-            Service("Service 3.3", 84f),
-            Service("Service 4.1", 25f),
-            Service("Service 4.2", 42f),
-            Service("Service 4.3", 14f))
-
-
-        val plans = listOf(
-            Plan("Plan 1"),
-            Plan("Plan 2"),
-            Plan("Plan 3"),
-            Plan("Plan 4"))
-
-
-        AbonentsDatabase.INSTANCE?.planDao()?.insertPlans(plans)
-            ?.subscribeOn(Schedulers.io())
-            ?.observeOn(AndroidSchedulers.mainThread())
-            ?.subscribe({
-                Log.d("TAG", "Inserted")
-            },{
-                Log.d("TAG", "Error: ${it.localizedMessage}")
-            }).let {
-                if (it != null)
-                {
-                    compositeDisposable.add(it)
-                }
-            }
-
-        AbonentsDatabase.INSTANCE?.serviceDao()?.insertServices(services1)
-            ?.subscribeOn(Schedulers.io())
-            ?.observeOn(AndroidSchedulers.mainThread())
-            ?.subscribe({
-                Log.d("TAG", "Inserted")
-            },{
-                Log.d("TAG", "Error: ${it.localizedMessage}")
-            }).let {
-                if (it != null)
-                {
-                    compositeDisposable.add(it)
-                }
-            }
-
-        val plansServices = listOf(
-            PlanService(1,1),
-            PlanService(1,2),
-            PlanService(2, 4),
-            PlanService(3,3),
-            PlanService(3,2),
-            PlanService(4, 3),
-            PlanService(4, 2)
-        )
-
-        /*AbonentsDatabase.INSTANCE?.planDao()?.getPlansInfo()
-            ?.flattenAsObservable { it }
-            ?.doOnNext { it.setServicesId() }
-            ?.collectInto(arrayListOf<PlanInfo>(), {list, item -> list.add(item)})
-            ?.subscribeOn(Schedulers.io())
-            ?.observeOn(AndroidSchedulers.mainThread())
-            ?.subscribe({
-                Log.d("TAG", "Recieved")
-                Log.d("TAG", it.toString())
-            }, {
-                Log.d("TAG", "Error: ${it.localizedMessage}")
-            }).let {
-                if (it != null)
-                {
-                    compositeDisposable.add(it)
-                }
-            }*/
     }
     //----------------------------------------------------------------------------------------------
     //Настроить NavigationDrawer
@@ -211,6 +131,7 @@ class MainActivity : AppCompatActivity()
         //Загрузить всех абонентов и установить в адаптер
         AbonentsDatabase.INSTANCE?.abonentDao()
             ?.getAbonents()
+            ?.delay(300, TimeUnit.MILLISECONDS)
             ?.subscribeOn(Schedulers.io())
             ?.observeOn(AndroidSchedulers.mainThread())
             ?.subscribe({
@@ -238,6 +159,7 @@ class MainActivity : AppCompatActivity()
                 it.services = AbonentsDatabase.INSTANCE?.serviceDao()?.getServicesForPlan(it.servicesIDs)!!
             }
             ?.collectInto(arrayListOf<PlanInfo>(), {list, item -> list.add(item)})
+            ?.delay(300, TimeUnit.MILLISECONDS)
             ?.subscribeOn(Schedulers.io())
             ?.observeOn(AndroidSchedulers.mainThread())
             ?.subscribe({
@@ -260,6 +182,7 @@ class MainActivity : AppCompatActivity()
         AbonentsDatabase.INSTANCE
             ?.serviceDao()
             ?.getServices()
+            ?.delay(300, TimeUnit.MILLISECONDS)
             ?.subscribeOn(Schedulers.io())
             ?.observeOn(AndroidSchedulers.mainThread())
             ?.subscribe({
@@ -280,13 +203,13 @@ class MainActivity : AppCompatActivity()
     private fun openInfo(plan : PlanInfo)
     {
         PlanBottomSheet
-            .newInstance(plan) {planInfo, operation -> operationTo(planInfo, operation) }
+            .newInstance(plan) { planInfo, operation -> operationTo(planInfo, operation) }
             .show(supportFragmentManager, "planInfo")
     }
     private fun openInfo(service : Service)
     {
         ServiceBottomSheet
-            .newInstance(service) {service, operation -> operationTo(service, operation) }
+            .newInstance(service) { service, operation -> operationTo(service, operation) }
             .show(supportFragmentManager, "service")
     }
     //----------------------------------------------------------------------------------------------

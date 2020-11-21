@@ -10,6 +10,10 @@
     <string name="menu_plans">Тарифы</string>
     <string name="menu_services">Дополнительные услуги</string>
 
+    <string name="title_abonents">Список абонентов</string>
+    <string name="title_plans">Тарифы</string>
+    <string name="title_services">Услуги</string>
+
     <string name="label_abonent_add">Добавить абонента</string>
     <string name="label_abonent_edit">Абонент</string>
 

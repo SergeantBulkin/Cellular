@@ -27,9 +27,23 @@
         <item name="android:background">@color/gray_900</item>
     </style>
 
-    <style name="AbonentItem">
+    <style name="ListItemText">
         <item name="android:textColor">@color/white</item>
         <item name="android:textSize">16sp</item>
+        <item name="android:fontFamily">@font/merriweather_regular</item>
+    </style>
+
+    <style name="CardViewStroke">
+        <item name="strokeColor">@color/white</item>
+    </style>
+
+    <style name="TextColor">
+        <item name="android:textColor">@color/white</item>
+    </style>
+
+    <style name="AppBarTitleStyle">
+        <item name="android:textSize">20sp</item>
+        <item name="android:textColor">@color/white</item>
         <item name="android:fontFamily">@font/merriweather_regular</item>
     </style>
 
@@ -39,6 +53,8 @@
         <item name="android:maxLines">1</item>
         <item name="android:layout_marginStart">16dp</item>
         <item name="android:layout_marginEnd">16dp</item>
+        <item name="boxStrokeColor">@color/box_stroke_color_selector</item>
+        <item name="hintTextColor">@color/helper_text_color_selector</item>
     </style>
 
     <style name="AutoCompleteTextViewStyle" parent="Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu">
@@ -47,10 +63,29 @@
         <item name="android:maxLines">1</item>
         <item name="android:layout_marginStart">16dp</item>
         <item name="android:layout_marginEnd">16dp</item>
+        <item name="boxStrokeColor">@color/box_stroke_color_selector</item>
+        <item name="hintTextColor">@color/helper_text_color_selector</item>
     </style>
 
     <style name="ButtonStyle">
         <item name="android:backgroundTint">@color/teal_200</item>
         <item name="android:textColor">@color/black</item>
+    </style>
+
+    <style name="RadioButtonStyle" parent="Widget.MaterialComponents.CompoundButton.RadioButton">
+        <item name="buttonTint">@color/radio_button_text_color_selector</item>
+    </style>
+
+    <style name="AppBarBackgroundColor">
+        <item name="android:background">@color/gray_900</item>
+    </style>
+
+    <style name="BackgroundColor">
+        <item name="android:background">@color/dark_background</item>
+    </style>
+
+    <style name="CardBackgroundColor">
+        <item name="cardBackgroundColor">@color/dark_background</item>
+        <item name="strokeColor">@color/cardStrokeColor</item>
     </style>
 </resources>

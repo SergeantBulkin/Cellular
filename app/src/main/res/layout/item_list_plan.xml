@@ -2,9 +2,9 @@
 <com.google.android.material.card.MaterialCardView xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    style="@style/CardViewStroke"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_margin="8dp"
-    app:strokeColor="@color/black"
     app:strokeWidth="2dp"
     app:cardCornerRadius="16dp">
 
@@ -15,11 +15,11 @@
 
         <TextView
             android:id="@+id/plan_name"
+            style="@style/TextColor"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="Комфорт S"
             android:textSize="20sp"
-            android:textColor="@color/black"
             android:textStyle="bold"
             android:fontFamily="@font/merriweather_regular"
             android:layout_marginTop="12dp"
@@ -28,11 +28,11 @@
 
         <TextView
             android:id="@+id/plan_services"
+            style="@style/TextColor"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:textSize="14sp"
             android:fontFamily="@font/merriweather_regular"
-            android:textColor="@color/black"
             android:text="1. 1 Гб интрнет-трафика\n2. Безлимит минут"
             android:layout_marginTop="4dp"
             android:layout_marginStart="24dp"
@@ -47,30 +47,30 @@
             android:layout_marginEnd="12dp"
             android:layout_marginBottom="16dp">
             <TextView
+                style="@style/TextColor"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Цена: "
                 android:fontFamily="@font/merriweather_regular"
                 android:textSize="14sp"
-                android:textStyle="bold"
-                android:textColor="@color/black"/>
+                android:textStyle="bold" />
 
             <TextView
+                style="@style/TextColor"
                 android:id="@+id/plan_cost"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="12.90"
                 android:fontFamily="@font/merriweather_regular"
-                android:textSize="14sp"
-                android:textColor="@color/black"/>
+                android:textSize="14sp" />
 
             <TextView
+                style="@style/TextColor"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text=" руб/мес"
                 android:fontFamily="@font/merriweather_regular"
-                android:textSize="14sp"
-                android:textColor="@color/black"/>
+                android:textSize="14sp" />
         </LinearLayout>
     </LinearLayout>
 </com.google.android.material.card.MaterialCardView>

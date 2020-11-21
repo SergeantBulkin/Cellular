@@ -8,9 +8,9 @@
     tools:context=".ui.plans.PlanBottomSheet">
 
     <LinearLayout
+        style="@style/AppBarBackgroundColor"
         android:layout_width="match_parent"
         android:layout_height="?attr/actionBarSize"
-        android:background="@color/purple_500"
         android:orientation="horizontal">
 
         <LinearLayout
@@ -59,8 +59,9 @@
 
     <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
-        <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_height="match_parent"
+        style="@style/BackgroundColor">
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:orientation="vertical">
@@ -70,10 +71,7 @@
                 style="@style/TextInputLayoutStyle"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="Название"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent">
+                android:hint="Название">
 
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/plan_name_text_input_edit_text"
@@ -90,10 +88,6 @@
                 android:layout_marginTop="8dp"
                 android:layout_marginEnd="16dp"
                 android:layout_marginBottom="8dp"
-                app:layout_constraintBottom_toTopOf="@id/plan_fab"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/plan_name_text_input_layout"
                 tools:listitem="@layout/item_list_services_in_plan" />
 
             <com.google.android.material.floatingactionbutton.FloatingActionButton
@@ -106,8 +100,7 @@
                 android:contentDescription="@string/fab_content_description"
                 android:enabled="false"
                 app:borderWidth="0dp"
-                app:layout_constraintBottom_toTopOf="@id/plan_cost_text_input_layout"
-                app:layout_constraintEnd_toEndOf="parent"
+                android:layout_gravity="bottom|end"
                 app:srcCompat="@drawable/ic_add"
                 app:tint="@color/white" />
             <!--=================================================================================-->
@@ -119,10 +112,7 @@
                 android:layout_marginBottom="4dp"
                 android:clickable="false"
                 android:focusable="false"
-                android:hint="Стоимость"
-                app:layout_constraintBottom_toTopOf="@id/plan_linear_layout_buttons"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent">
+                android:hint="Стоимость">
 
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/plan_cost_text_input_edit_text"
@@ -134,16 +124,12 @@
             </com.google.android.material.textfield.TextInputLayout>
             <!--=================================================================================-->
             <LinearLayout
-                android:id="@+id/plan_linear_layout_buttons"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="16dp"
                 android:layout_marginEnd="16dp"
                 android:layout_marginBottom="8dp"
-                android:orientation="horizontal"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent">
+                android:orientation="horizontal">
 
                 <com.google.android.material.button.MaterialButton
                     android:id="@+id/plan_button_update"
@@ -176,6 +162,6 @@
                     android:visibility="gone" />
             </LinearLayout>
             <!--=================================================================================-->
-        </androidx.constraintlayout.widget.ConstraintLayout>
+        </LinearLayout>
     </androidx.core.widget.NestedScrollView>
 </LinearLayout>
