@@ -15,11 +15,9 @@ class AbonentsAdapter(private val clickListener : (Abonent) -> Unit) : RecyclerV
     //----------------------------------------------------------------------------------------------
     fun setAbonents(abonentsList : List<Abonent>)
     {
-        if (abonents.size == 0)
-        {
-            this.abonents.addAll(abonentsList)
-            notifyDataSetChanged()
-        }
+        abonents.clear()
+        abonents.addAll(abonentsList)
+        notifyDataSetChanged()
     }
     //----------------------------------------------------------------------------------------------
     override fun getItemCount(): Int

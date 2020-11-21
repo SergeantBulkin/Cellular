@@ -15,11 +15,10 @@ class ServicesAdapter(private val clickListener : (Service) -> Unit) : RecyclerV
     //----------------------------------------------------------------------------------------------
     fun setServices(serviceList : List<Service>)
     {
-        if (services.size == 0)
-        {
-            this.services.addAll(serviceList)
-            notifyDataSetChanged()
-        }
+        services.clear()
+        services.addAll(serviceList)
+        notifyDataSetChanged()
+
     }
     //----------------------------------------------------------------------------------------------
     fun addItem(service: Service)

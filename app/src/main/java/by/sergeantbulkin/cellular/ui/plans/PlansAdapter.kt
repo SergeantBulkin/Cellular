@@ -15,11 +15,9 @@ class PlansAdapter(private val clickListener : (PlanInfo) -> Unit) : RecyclerVie
     //----------------------------------------------------------------------------------------------
     fun setPlans(plansReady : List<PlanInfo>)
     {
-        if (plans.size == 0)
-        {
-            this.plans.addAll(plansReady)
-            notifyDataSetChanged()
-        }
+        plans.clear()
+        plans.addAll(plansReady)
+        notifyDataSetChanged()
     }
     //----------------------------------------------------------------------------------------------
     fun addItem(planInfo: PlanInfo)
