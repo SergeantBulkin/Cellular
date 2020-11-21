@@ -26,4 +26,8 @@ interface ServiceDAO
     //Получить все услуги
     @Query("SELECT * FROM service")
     fun getServices() : Single<List<Service>>
+
+    //Получить услуги для плана
+    @Query("SELECT * FROM service WHERE id IN (:values)")
+    fun getServicesForPlan(values : List<Int>) : List<Service>
 }
