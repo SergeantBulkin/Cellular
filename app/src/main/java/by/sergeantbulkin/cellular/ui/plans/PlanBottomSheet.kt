@@ -18,7 +18,6 @@ import com.gzeinnumer.mylibsearchviewdialog.dialog.searchViewDialogNew.SearchVie
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.schedulers.Schedulers
-import kotlin.math.cos
 
 class PlanBottomSheet(val submitListener : (PlanInfo, Operation) -> Unit) : BottomSheetDialogFragment()
 {
@@ -92,8 +91,10 @@ class PlanBottomSheet(val submitListener : (PlanInfo, Operation) -> Unit) : Bott
             planCost -= service.cost
             binding.planCostTextInputEditText.setText("$planCost", TextView.BufferType.EDITABLE)
         }
-        binding.planServicesRecyclerView.layoutManager = LinearLayoutManager(requireContext())
-        binding.planServicesRecyclerView.adapter = planServiceAdapter
+        binding.planServicesRecyclerView.apply {
+            layoutManager = LinearLayoutManager(requireContext())
+            adapter = planServiceAdapter
+        }
     }
     //----------------------------------------------------------------------------------------------
     //Заполнить и запомнить данные выбранного плана
@@ -204,7 +205,7 @@ class PlanBottomSheet(val submitListener : (PlanInfo, Operation) -> Unit) : Bott
         val name = binding.planNameTextInputEditText.text.toString()
 
         planInfo = PlanInfo(planId, name, "", planCost)
-        planInfo!!.services = services
+        planInfo!!.services = chosenServices
 
         submitListener(planInfo!!, operation)
         dismiss()

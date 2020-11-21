@@ -1,6 +1,5 @@
 package by.sergeantbulkin.cellular.room.dao
 
-import android.graphics.LightingColorFilter
 import androidx.room.*
 import by.sergeantbulkin.cellular.room.model.Plan
 import by.sergeantbulkin.cellular.room.model.PlanInfo
@@ -13,7 +12,7 @@ interface PlanDAO
 {
     //Добавить тарифный план
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    fun insertPlan(plan: Plan) : Completable
+    fun insertPlan(plan: Plan) : Single<Long>
 
     //Добавить тарифные планы
     @Insert(onConflict = OnConflictStrategy.REPLACE)
@@ -26,9 +25,13 @@ interface PlanDAO
     @Delete
     fun deletePlan(plan: Plan) : Completable
 
+    //Удалить все связи услуг с планом
+    @Query("DELETE FROM PlanService WHERE plan_id = :value")
+    fun deletePlanServices(value: Int) : Completable
+
     //Обновить тарифный план
     @Update
-    fun updatePlan(plan: Plan)
+    fun updatePlan(plan: Plan) : Completable
 
     //Получить все тарифные планы
     @Query("SELECT * FROM `plan`")
@@ -37,7 +40,7 @@ interface PlanDAO
     @Query("SELECT * FROM PlanService")
     fun getPlansServices() : Single<List<PlanService>>
 
-    //SELECT  planId, planName,  GROUP_CONCAT(Service.serviceId) AS services_id, Service.serviceName, SUM(Service.cost) AS planCost
+    //SELECT planId, planName, GROUP_CONCAT(Service.serviceId) AS services_id, Service.serviceName, SUM(Service.cost) AS planCost
     // FROM `plan`
     //INNER JOIN PlanService
     // ON planId = PlanService.plan_id

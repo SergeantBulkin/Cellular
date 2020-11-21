@@ -22,6 +22,31 @@ class PlansAdapter(private val clickListener : (PlanInfo) -> Unit) : RecyclerVie
         }
     }
     //----------------------------------------------------------------------------------------------
+    fun addItem(planInfo: PlanInfo)
+    {
+        plans.add(planInfo)
+        notifyItemInserted(plans.size-1)
+    }
+    fun removeItem(planInfo: PlanInfo)
+    {
+        val index = plans.indexOf(planInfo)
+        plans.removeAt(index)
+        notifyItemRemoved(index)
+    }
+    fun updateItem(planInfo: PlanInfo)
+    {
+        var index = 0
+        for (ind in plans.indices)
+        {
+            if (plans[ind].planId == planInfo.planId)
+            {
+                index = ind
+            }
+        }
+        plans[index] = planInfo
+        notifyItemChanged(index)
+    }
+    //----------------------------------------------------------------------------------------------
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): PlanViewHolder
     {
         return PlanViewHolder(LayoutInflater.from(parent.context).inflate(R.layout.item_list_plan, parent, false))
