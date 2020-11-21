@@ -1,10 +1,56 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context=".ui.abonent.AbonentFragment">
+    tools:context=".ui.abonents.AbonentBottomSheet">
+
+    <LinearLayout
+        android:background="@color/purple_500"
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"
+        android:orientation="horizontal">
+
+        <LinearLayout
+            android:id="@+id/abonent_arrow_down"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:clickable="true"
+            android:focusable="true">
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/ic_arrow_down"
+                app:tint="@color/white" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="5"
+            android:gravity="center_vertical">
+            <TextView
+                android:id="@+id/abonent_title"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Добавить абонента"
+                android:textColor="@color/white"
+                android:textSize="20sp"
+                android:fontFamily="@font/merriweather_regular"
+                android:layout_marginStart="16dp"
+                android:layout_marginEnd="16dp"/>
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"/>
+
+    </LinearLayout>
 
     <androidx.core.widget.ContentLoadingProgressBar
         android:id="@+id/abonent_progress_bar"
@@ -33,7 +79,8 @@
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/abonent_name_text_input_edit_text"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content" />
+                    android:layout_height="wrap_content"
+                    android:singleLine="true"/>
             </com.google.android.material.textfield.TextInputLayout>
             <!--=================================================================================-->
             <com.google.android.material.textfield.TextInputLayout
@@ -46,7 +93,8 @@
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/abonent_lastname_text_input_edit_text"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content" />
+                    android:layout_height="wrap_content"
+                    android:singleLine="true"/>
             </com.google.android.material.textfield.TextInputLayout>
             <!--=================================================================================-->
             <com.google.android.material.textfield.TextInputLayout
@@ -59,7 +107,8 @@
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/abonent_middlename_text_input_edit_text"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content" />
+                    android:layout_height="wrap_content"
+                    android:singleLine="true"/>
             </com.google.android.material.textfield.TextInputLayout>
             <!--=================================================================================-->
             <LinearLayout
@@ -108,7 +157,9 @@
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/abonent_age_text_input_edit_text"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content" />
+                    android:layout_height="wrap_content"
+                    android:singleLine="true"
+                    android:inputType="number"/>
             </com.google.android.material.textfield.TextInputLayout>
             <!--=================================================================================-->
             <com.google.android.material.textfield.TextInputLayout
@@ -121,7 +172,8 @@
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/abonent_address_text_input_edit_text"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content" />
+                    android:layout_height="wrap_content"
+                    android:singleLine="true"/>
             </com.google.android.material.textfield.TextInputLayout>
             <!--=================================================================================-->
             <com.google.android.material.textfield.TextInputLayout
@@ -134,7 +186,9 @@
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/abonent_registration_date_text_input_edit_text"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content" />
+                    android:layout_height="wrap_content"
+                    android:editable="false"
+                    android:singleLine="true"/>
             </com.google.android.material.textfield.TextInputLayout>
             <!--=================================================================================-->
             <com.google.android.material.textfield.TextInputLayout
@@ -142,12 +196,14 @@
                 style="@style/TextInputLayoutStyle"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="Дата регистрации">
+                android:hint="Номер">
 
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/abonent_mobile_number_text_input_edit_text"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content" />
+                    android:layout_height="wrap_content"
+                    android:singleLine="true"
+                    android:inputType="phone"/>
             </com.google.android.material.textfield.TextInputLayout>
             <!--=================================================================================-->
             <com.google.android.material.textfield.TextInputLayout
@@ -155,10 +211,12 @@
                 style="@style/AutoCompleteTextViewStyle"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="Тарифный план">
+                android:hint="Тарифный план"
+                android:enabled="false"
+                app:startIconDrawable="@drawable/ic_clear">
 
                 <com.google.android.material.textfield.MaterialAutoCompleteTextView
-                    android:id="@+id/abonent_plan_text_input_edit_text"
+                    android:id="@+id/abonent_plan_autocomplete"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:editable="false"/>
@@ -169,10 +227,12 @@
                 style="@style/AutoCompleteTextViewStyle"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="Дополнительные услуги">
+                android:hint="Дополнительные услуги"
+                android:enabled="false"
+                android:visibility="gone">
 
                 <com.google.android.material.textfield.MaterialAutoCompleteTextView
-                    android:id="@+id/abonent_services_text_input_edit_text"
+                    android:id="@+id/abonent_services_autocomplete"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:editable="false"/>
@@ -187,7 +247,7 @@
                 android:layout_marginEnd="16dp"
                 android:layout_marginBottom="8dp">
                 <com.google.android.material.button.MaterialButton
-                    android:id="@+id/abonent_button_edit"
+                    android:id="@+id/abonent_button_update"
                     style="@style/ButtonStyle"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"

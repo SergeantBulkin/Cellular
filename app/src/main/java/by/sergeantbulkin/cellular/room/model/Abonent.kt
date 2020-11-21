@@ -14,7 +14,7 @@ data class Abonent(
     @ColumnInfo(name = "sex") val isWoman : Boolean,
     val age : Int,
     val address : String,
-    val registrationDate : String,
+    val registrationDate: Long,
     val mobileNumber : String,
     val planId : Int) : Parcelable
 {
@@ -27,7 +27,7 @@ data class Abonent(
         parcel.readByte() != 0.toByte(),
         parcel.readInt(),
         parcel.readString()!!,
-        parcel.readString()!!,
+        parcel.readLong(),
         parcel.readString()!!,
         parcel.readInt()
     )
@@ -43,7 +43,7 @@ data class Abonent(
         parcel.writeByte(if (isWoman) 1 else 0)
         parcel.writeInt(age)
         parcel.writeString(address)
-        parcel.writeString(registrationDate)
+        parcel.writeLong(registrationDate)
         parcel.writeString(mobileNumber)
         parcel.writeInt(planId)
         parcel.writeInt(abonentId)

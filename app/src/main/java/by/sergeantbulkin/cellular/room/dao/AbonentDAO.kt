@@ -18,7 +18,7 @@ interface AbonentDAO
 
     //Обновить абонента
     @Update
-    fun updateAbonent(abonent: Abonent)
+    fun updateAbonent(abonent: Abonent) : Completable
 
     //Получить всех абонентов
     @Query("SELECT * FROM abonent")

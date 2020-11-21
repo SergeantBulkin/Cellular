@@ -1,5 +1,6 @@
 package by.sergeantbulkin.cellular.ui.abonents
 
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -11,12 +12,15 @@ import by.sergeantbulkin.cellular.room.model.Abonent
 class AbonentsAdapter(private val clickListener : (Abonent) -> Unit) : RecyclerView.Adapter<AbonentsAdapter.AbonentViewHolder>()
 {
     //----------------------------------------------------------------------------------------------
-    private var abonentsList = arrayListOf<Abonent>()
+    private var abonents = arrayListOf<Abonent>()
     //----------------------------------------------------------------------------------------------
-    fun setAbonents(abonents : ArrayList<Abonent>)
+    fun setAbonents(abonentsList : List<Abonent>)
     {
-        this.abonentsList = abonents
-        notifyDataSetChanged()
+        if (abonents.size == 0)
+        {
+            this.abonents.addAll(abonentsList)
+            notifyDataSetChanged()
+        }
     }
     //----------------------------------------------------------------------------------------------
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): AbonentViewHolder
@@ -26,24 +30,40 @@ class AbonentsAdapter(private val clickListener : (Abonent) -> Unit) : RecyclerV
     //----------------------------------------------------------------------------------------------
     override fun onBindViewHolder(holder: AbonentViewHolder, position: Int)
     {
-        holder.bind(abonentsList[position])
+        holder.bind(abonents[position])
     }
     //----------------------------------------------------------------------------------------------
     override fun getItemCount(): Int
     {
-        return abonentsList.size
+        return abonents.size
     }
     //----------------------------------------------------------------------------------------------
     fun addItem(abonent: Abonent)
     {
-        abonentsList.add(abonent)
-        notifyItemInserted(abonentsList.size-1)
+        abonents.add(abonent)
+        notifyItemInserted(abonents.size-1)
     }
     fun removeItem(abonent: Abonent)
     {
-        val index = abonentsList.indexOf(abonent)
-        abonentsList.removeAt(index)
+        val index = abonents.indexOf(abonent)
+        abonents.removeAt(index)
         notifyItemRemoved(index)
+    }
+    fun updateItem(abonent: Abonent)
+    {
+        Log.d("TAG", " До - $abonents")
+        var index = 0
+        for (ab in abonents)
+        {
+            if (ab.abonentId == abonent.abonentId)
+            {
+                index = abonents.indexOf(ab)
+                Log.d("TAG", "Индекс - $index")
+            }
+        }
+        abonents[index] = abonent
+        Log.d("TAG", "После - $abonents")
+        notifyItemChanged(index)
     }
     //----------------------------------------------------------------------------------------------
     //----------------------------------------------------------------------------------------------
