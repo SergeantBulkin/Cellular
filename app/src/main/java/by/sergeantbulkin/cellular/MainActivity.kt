@@ -16,6 +16,8 @@ import by.sergeantbulkin.cellular.ui.abonents.AbonentBottomSheet
 import by.sergeantbulkin.cellular.ui.abonents.AbonentsAdapter
 import by.sergeantbulkin.cellular.ui.plans.PlanBottomSheet
 import by.sergeantbulkin.cellular.ui.plans.PlansAdapter
+import by.sergeantbulkin.cellular.ui.services.ServiceBottomSheet
+import by.sergeantbulkin.cellular.ui.services.ServicesAdapter
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.google.android.material.navigation.NavigationView
 import io.reactivex.android.schedulers.AndroidSchedulers
@@ -35,6 +37,7 @@ class MainActivity : AppCompatActivity()
     //Адаптеры
     private lateinit var abonentsAdapter: AbonentsAdapter
     private lateinit var plansAdapter: PlansAdapter
+    private lateinit var serviceAdapter : ServicesAdapter
     //CompositeDisposable для хранения подписок
     private val compositeDisposable = CompositeDisposable()
     //----------------------------------------------------------------------------------------------
@@ -169,7 +172,7 @@ class MainActivity : AppCompatActivity()
             {
                 R.id.nav_abonents -> loadAbonents()
                 R.id.nav_plans -> loadPlans()
-                R.id.nav_services -> Unit
+                R.id.nav_services -> loadServices()
             }
             true
         }
@@ -179,9 +182,9 @@ class MainActivity : AppCompatActivity()
     {
         when(currentScreen)
         {
-            CurrentScreen.ABONENTS -> AbonentBottomSheet{ abonent, operation -> operationTo(abonent, operation)}.show(supportFragmentManager, "abonent")
-            CurrentScreen.PLANS -> PlanBottomSheet{planInfo, operation -> operationTo(planInfo, operation)}.show(supportFragmentManager, "plan")
-            CurrentScreen.SERVICES -> Unit
+            CurrentScreen.ABONENTS -> AbonentBottomSheet { abonent, operation -> operationTo(abonent, operation)}.show(supportFragmentManager, "abonent")
+            CurrentScreen.PLANS -> PlanBottomSheet { planInfo, operation -> operationTo(planInfo, operation)}.show(supportFragmentManager, "plan")
+            CurrentScreen.SERVICES -> ServiceBottomSheet { service, operation -> operationTo(service, operation)}.show(supportFragmentManager, "service")
         }
     }
     //----------------------------------------------------------------------------------------------
@@ -191,6 +194,7 @@ class MainActivity : AppCompatActivity()
         //Открыть информацию об абоненте
         abonentsAdapter = AbonentsAdapter { abonent -> openInfo(abonent) }
         plansAdapter = PlansAdapter { planInfo -> openInfo(planInfo) }
+        serviceAdapter = ServicesAdapter { service -> openInfo(service) }
 
         recyclerView.adapter = abonentsAdapter
         loadAbonents()
@@ -201,6 +205,7 @@ class MainActivity : AppCompatActivity()
         //Убрать текущий адаптер
         clearAdapter()
         showProgressBar()
+        toolbar.setTitle(R.string.title_abonents)
         //Текущий экран  - Абоненты
         currentScreen = CurrentScreen.ABONENTS
         //Загрузить всех абонентов и установить в адаптер
@@ -221,6 +226,7 @@ class MainActivity : AppCompatActivity()
         //Убрать текущий адаптер
         clearAdapter()
         showProgressBar()
+        toolbar.setTitle(R.string.title_plans)
         //Текущий экран  - Тарифные планы
         currentScreen = CurrentScreen.PLANS
         //Загрузить все планы и установить в адаптер
@@ -242,7 +248,28 @@ class MainActivity : AppCompatActivity()
                 Log.d("TAG", "Error: ${it.localizedMessage}")
             })?.let { compositeDisposable.add(it) }
     }
-    //private fun loadServices()
+    private fun loadServices()
+    {
+        //Убрать текущий адаптер
+        clearAdapter()
+        showProgressBar()
+        toolbar.setTitle(R.string.title_services)
+        //Текущий экран  - Тарифные планы
+        currentScreen = CurrentScreen.SERVICES
+        //Загрузить все планы и установить в адаптер
+        AbonentsDatabase.INSTANCE
+            ?.serviceDao()
+            ?.getServices()
+            ?.subscribeOn(Schedulers.io())
+            ?.observeOn(AndroidSchedulers.mainThread())
+            ?.subscribe({
+                hideProgressBar()
+                serviceAdapter.setServices(it)
+                recyclerView.adapter = serviceAdapter
+            }, {
+                Log.d("TAG", "Error: ${it.localizedMessage}")
+            })?.let { compositeDisposable.add(it) }
+    }
     //----------------------------------------------------------------------------------------------
     private fun openInfo(ab: Abonent)
     {
@@ -256,7 +283,12 @@ class MainActivity : AppCompatActivity()
             .newInstance(plan) {planInfo, operation -> operationTo(planInfo, operation) }
             .show(supportFragmentManager, "planInfo")
     }
-    //private fun openInfo(service : Service)
+    private fun openInfo(service : Service)
+    {
+        ServiceBottomSheet
+            .newInstance(service) {service, operation -> operationTo(service, operation) }
+            .show(supportFragmentManager, "service")
+    }
     //----------------------------------------------------------------------------------------------
     private fun operationTo(ab: Abonent, operation: Operation)
     {
@@ -357,10 +389,56 @@ class MainActivity : AppCompatActivity()
                     ?.subscribeOn(Schedulers.io())
                     ?.observeOn(AndroidSchedulers.mainThread())
                     ?.subscribe({
-                        Log.d("TAG", "onComplete")
                         plansAdapter.removeItem(planInfo)
                         hideProgressBar()
                     },{
+                        Log.d("TAG", "Error: ${it.localizedMessage}")
+                    })?.let { compositeDisposable.add(it) }
+            }
+        }
+    }
+    private fun operationTo(service: Service, operation: Operation)
+    {
+        showProgressBar()
+
+        when (operation)
+        {
+            Operation.ADD -> {
+                AbonentsDatabase.INSTANCE
+                    ?.serviceDao()
+                    ?.insertService(service)
+                    ?.subscribeOn(Schedulers.io())
+                    ?.observeOn(AndroidSchedulers.mainThread())
+                    ?.subscribe({
+                        serviceAdapter.addItem(service)
+                        hideProgressBar()
+                    }, {
+                        Log.d("TAG", "Error: ${it.localizedMessage}")
+                    })?.let { compositeDisposable.add(it) }
+            }
+            Operation.UPDATE -> {
+                AbonentsDatabase.INSTANCE
+                    ?.serviceDao()
+                    ?.updateService(service)
+                    ?.subscribeOn(Schedulers.io())
+                    ?.observeOn(AndroidSchedulers.mainThread())
+                    ?.subscribe({
+                        serviceAdapter.updateItem(service)
+                        hideProgressBar()
+                    }, {
+                        Log.d("TAG", "Error: ${it.localizedMessage}")
+                    })?.let { compositeDisposable.add(it) }
+            }
+            Operation.DELETE -> {
+                AbonentsDatabase.INSTANCE
+                    ?.serviceDao()
+                    ?.deleteService(service)
+                    ?.subscribeOn(Schedulers.io())
+                    ?.observeOn(AndroidSchedulers.mainThread())
+                    ?.subscribe({
+                        serviceAdapter.removeItem(service)
+                        hideProgressBar()
+                    }, {
                         Log.d("TAG", "Error: ${it.localizedMessage}")
                     })?.let { compositeDisposable.add(it) }
             }
@@ -376,7 +454,6 @@ class MainActivity : AppCompatActivity()
             drawerLayout.closeDrawers()
             return
         }
-
         super.onBackPressed()
     }
     //----------------------------------------------------------------------------------------------

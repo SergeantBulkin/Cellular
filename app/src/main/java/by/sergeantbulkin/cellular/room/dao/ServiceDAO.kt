@@ -21,7 +21,7 @@ interface ServiceDAO
 
     //Обновить услугу
     @Update
-    fun updateService(service: Service)
+    fun updateService(service: Service) : Completable
 
     //Получить все услуги
     @Query("SELECT * FROM service")
