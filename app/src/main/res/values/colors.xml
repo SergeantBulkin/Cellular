@@ -7,6 +7,7 @@
     <color name="teal_700">#FF018786</color>
     <color name="gray_900">#FF212121</color>
     <color name="dark_background">#FF111111</color>
+    <color name="textInputLayout">#FFA7A7A7</color>
     <color name="pressed">#A88031FF</color>
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>

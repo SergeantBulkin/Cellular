@@ -17,8 +17,10 @@
             android:layout_width="match_parent"
             android:layout_height="?attr/actionBarSize"
             android:background="?attr/colorPrimary"
+            app:title="@string/menu_abonents"
             app:navigationIcon="@drawable/ic_dehaze"
-            app:popupTheme="@style/Theme.Cellular.PopupOverlay" />
+            app:popupTheme="@style/Theme.Cellular.PopupOverlay"
+            app:menu="@menu/main"/>
 
     </com.google.android.material.appbar.AppBarLayout>
 

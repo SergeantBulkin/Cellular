@@ -11,7 +11,7 @@
             android:checked="true"/>
         <item
             android:id="@+id/nav_plans"
-            android:icon="@drawable/ic_menu_gallery"
+            android:icon="@drawable/ic_menu_plans"
             android:title="@string/menu_plans" />
         <item
             android:id="@+id/nav_services"
